@@ -2,6 +2,7 @@ const express = require('express')
 
 const app = express()
 
+// static files
 app.use(express.static('public'))
 
 app.get('/', function (req, res) {
