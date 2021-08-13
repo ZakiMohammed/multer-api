@@ -10,6 +10,7 @@ const storage = multer.diskStorage({
         cb(null, `${uuid.v4()}.${originalnameSplit[1]}`)
     }
 })
-const upload = multer({ storage })
+// const upload = multer({ dest: 'uploads' });
+const upload = multer({ storage });
 
 module.exports = upload;
