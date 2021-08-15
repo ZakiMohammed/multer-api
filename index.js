@@ -4,6 +4,7 @@ const app = express()
 
 // static files
 app.use(express.static('public'))
+app.use('/uploads', express.static('uploads'))
 
 app.get('/', function (req, res) {
     res.sendFile('index.html')

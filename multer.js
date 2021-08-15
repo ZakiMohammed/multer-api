@@ -6,8 +6,9 @@ const storage = multer.diskStorage({
         cb(null, 'uploads')
     },
     filename: function (req, file, cb) {
-        const originalnameSplit = file.originalname.split('.');
-        cb(null, `${uuid.v4()}.${originalnameSplit[1]}`)
+        const nameSplit = file.originalname.split('.');
+        const extension = nameSplit.length ? nameSplit[nameSplit.length - 1] : '';
+        cb(null, `${uuid.v4()}.${extension}`)
     }
 })
 // const upload = multer({ dest: 'uploads' });
