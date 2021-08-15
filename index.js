@@ -4,6 +4,7 @@ const app = express()
 
 // static files
 app.use(express.static('public'))
+app.use('/assets', express.static('/public/assets'))
 app.use('/uploads', express.static('uploads'))
 
 app.get('/', function (req, res) {

@@ -1,0 +1,38 @@
+.files {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.files div {
+    margin: 0.25rem;
+}
+.files button {
+    width: 100%;
+    padding: 0;
+}
+.files div a {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    text-decoration: none;
+    color: #212529;
+}
+.files div a span {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
+}
+.files div a img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    object-position: center;
+}

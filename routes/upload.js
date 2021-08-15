@@ -18,12 +18,11 @@ router.get('/get-files', function (req, res) {
 router.get('/remove-files', function (req, res) {
 
     const files = fs.readdirSync('uploads');
-    const stats = files.map(file => ({
-        name: file,
-        ...fs.statSync(`uploads/${file}`)
-    })).sort((a, b) => b.ctimeMs - a.mtimeMs);
+    files.forEach(fileName => fs.unlinkSync(`uploads/${fileName}`));
 
-    res.json(stats.map(i => i.name));
+    res.json({
+        message: 'Files removed',
+    });
 })
 
 router.get('/remove-file/:fileName', function (req, res) {
@@ -31,7 +30,9 @@ router.get('/remove-file/:fileName', function (req, res) {
     const fileName = req.params.fileName;
     fs.unlinkSync(`uploads/${fileName}`);
 
-    res.json();
+    res.json({
+        message: 'File removed',
+    });
 })
 
 router.post('/upload-file', upload.single('avatar'), function (req, res) {

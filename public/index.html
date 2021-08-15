@@ -12,47 +12,7 @@
     <!-- css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-
-    <style>
-        .files {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-        .files div {
-            margin: 0.25rem;
-        }
-        .files button {
-            width: 100%;
-            padding: 0;
-        }
-        .files div a {
-            height: 100px;
-            width: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 30px;
-            border: 1px solid rgba(0,0,0,.125);
-            border-radius: .25rem;
-            text-decoration: none;
-            color: #212529;
-        }
-        .files div a span {
-            font-size: 12px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 80px;
-        }
-        .files div a img {
-            width: 90px;
-            height: 90px;
-            object-fit: cover;
-            object-position: center;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -133,7 +93,7 @@
 
                 <!-- files -->
                 <div class="mb-3">
-                    <button class="btn btn-outline-danger btn-sm float-end">Remove All</button>
+                    <button class="btn btn-outline-danger btn-sm float-end" onclick="removeFiles()">Remove All</button>
                     <h5>Uploads Folder:</h5>
                 </div>
                 <div class="files"></div>
@@ -147,87 +107,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
-    <script>
-
-        const baseUrl = 'http://localhost:3000/';
-
-        // controls
-        const btnSingle = document.getElementById('btnSingle');
-        const btnMultiple = document.getElementById('btnMultiple');
-        const fileInput = document.getElementById('file');
-        const filesInput = document.getElementById('files');
-        const dvFiles = document.querySelector('.files');
-        
-        // on load
-        (function () {
-            const queryString = new URLSearchParams(location.search);
-            const message = queryString.get('message');
-            if (message) {
-                alert(`Using Forms: ${message}`);
-            }
-
-            getFiles();
-        })();
-
-        function getFiles() {
-            fetch(`${baseUrl}get-files`)
-                .then(res => res.json())
-                .then(data => {
-                    let html = '';
-                    data.forEach(fileName => {
-                        const [name, extension] = fileName.split('.');
-                        const isImage = ['png', 'jpg', 'gif'].includes(extension.toLowerCase());
-                        html += `
-                            <div>
-                                <a href="uploads/${fileName}" download>
-                                    ${
-                                        isImage ? 
-                                            `<img src="uploads/${fileName}" alt="${fileName}">` : 
-                                            `📃 <span>${fileName}</span>`
-                                    }
-                                </a>
-                                <button class="btn btn-sm btn-secondary">Remove</button>
-                            </div>
-                        `;
-                    });
-                    dvFiles.innerHTML = html;
-                })
-        }
-
-        // event listeners
-        btnSingle.addEventListener('click', function (e) {
-            const formData = new FormData();
-            formData.append('avatar', fileInput.files[0]);
-            fileInput.value = '';
-
-            fetch(`${baseUrl}upload-file`, {
-                method: 'POST',
-                body: formData
-            })
-                .then(res => res.json())
-                .then(data => {
-                    getFiles();
-                    alert(`Using AJAX: ${data.message}`);
-                });
-        });
-        btnMultiple.addEventListener('click', function (e) {
-            const formData = new FormData();
-            Object.values(filesInput.files)
-                .forEach(file => formData.append('avatar', file));
-            filesInput.value = '';
-
-            fetch(`${baseUrl}upload-files`, {
-                method: 'POST',
-                body: formData
-            })
-                .then(res => res.json())
-                .then(data => {
-                    getFiles();
-                    alert(`Using AJAX: ${data.message}`);
-                });
-        });
-
-    </script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
