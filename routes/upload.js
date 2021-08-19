@@ -10,7 +10,7 @@ router.get('/get-files', function (req, res) {
     const stats = files.map(file => ({
         name: file,
         ...fs.statSync(`uploads/${file}`)
-    })).sort((a, b) => b.ctimeMs - a.mtimeMs);
+    })).sort((a, b) => b.mtimeMs - a.mtimeMs);
 
     res.json(stats.map(i => i.name));
 })
